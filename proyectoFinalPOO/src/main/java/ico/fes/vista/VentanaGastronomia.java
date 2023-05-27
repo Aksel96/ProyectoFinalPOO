@@ -43,12 +43,12 @@ public class VentanaGastronomia extends JFrame {
 
     public VentanaGastronomia(String title) throws HeadlessException {
         super(title);
-        this.setSize(1000,800);
+        this.setSize(1000,900);
         layout = new GridLayout(2,2);
         this.getContentPane().setLayout(layout);
         //Panel1
         panel1 = new JPanel(new GridLayout(0,2));
-        panel1.setBackground(new Color(151, 220, 239));
+        panel1.setBackground(new Color(129, 204, 229));
         lblNombre = new JLabel("        Nombre del Platillo:");
         lblRegion = new JLabel("        Region de origen:");
         lblTiempo =  new JLabel("        Tiempo de Preparacion:");
@@ -75,21 +75,23 @@ public class VentanaGastronomia extends JFrame {
 
         //Panel2
         panel2 = new JPanel(new FlowLayout());
-        panel2.setBackground(new Color(196, 255, 210));
+        panel2.setBackground(new Color(122, 215, 143));
         btnCargar = new JButton("Cargar");
         panel2.add(btnCargar);
         tblGastronomia = new JTable();
+        tblGastronomia.setEnabled(true);
         scrollPane = new JScrollPane(tblGastronomia);
         panel2.add(scrollPane);
 
         //Panel3
         panel3 = new JPanel(new FlowLayout());
         panel3.setBackground(new Color(184, 137, 255));
-        imagenPlatillos = new JLabel("...");
+        imagenPlatillos = new JLabel("");
         panel3.add(imagenPlatillos);
+
         //Panel4
         panel4 = new JPanel(new GridLayout(0,2));
-        panel4.setBackground(new Color(255, 232, 185));
+        panel4.setBackground(new Color(250, 221, 170));
         lblId = new JLabel("       Id:");
         lblNombreMod = new JLabel("        Nombre del Platillo:");
         lblRegionMod = new JLabel("        Region de origen:");
@@ -97,6 +99,7 @@ public class VentanaGastronomia extends JFrame {
         lblDificultadMod = new JLabel("        Dificultad de elaboracion del Platillo:");
         lblUrlMod = new JLabel("        URL de la Imagen:");
         txtIdModificar =new JTextField();
+        txtIdModificar.setEnabled(false);
         txtNombreModificar = new JTextField();
         txtRegionModificar = new JTextField();
         txtTiempoModificar = new JTextField();
@@ -408,6 +411,5 @@ public class VentanaGastronomia extends JFrame {
         txtTiempoAgregar.setText("");
         txtDificultadAgregar.setText("");
         txtUrlAgregar.setText("");
-
     }
 }

@@ -28,12 +28,27 @@ public class PlatilloDAO implements InterfazDAO{
 
     @Override
     public boolean update(Object obj) throws SQLException {
-        return false;
+        int colCount = 0;
+        String sqlUpdate = "UPDATE gItaliana SET nombre = ?, regionOrigen = ?, tiempoPreparacion = ?, dificultad = ?, url = ? WHERE id = ?";
+        PreparedStatement pstm = ConexionSingleton.getInstance("GastronomiaDB.db").getConnection().prepareStatement(sqlUpdate);
+        pstm.setString(1,((Platillo)obj).getNombre());
+        pstm.setString(2,((Platillo)obj).getRegionOrigen());
+        pstm.setInt(3,((Platillo)obj).getTiempoPreparacion());
+        pstm.setString(4,((Platillo)obj).getDificultad());
+        pstm.setString(5,((Platillo)obj).getUrl());
+        pstm.setInt(6,((Platillo)obj).getId());
+        colCount = pstm.executeUpdate();
+        return colCount > 0;
     }
 
     @Override
     public boolean delete(String id) throws SQLException {
-        return false;
+        int colCount = 0;
+        String sqlDelete = "DELETE FROM gItaliana WHERE id = ?";
+        PreparedStatement pstm = ConexionSingleton.getInstance("GastronomiaDB.db").getConnection().prepareStatement(sqlDelete);
+        pstm.setInt(1, Integer.parseInt(id));
+        colCount = pstm.executeUpdate();
+        return colCount > 0;
     }
 
     @Override
@@ -49,4 +64,6 @@ public class PlatilloDAO implements InterfazDAO{
 
         return resultado;
     }
+
+
 }

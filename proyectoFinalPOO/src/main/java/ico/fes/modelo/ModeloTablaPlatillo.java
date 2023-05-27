@@ -65,7 +65,7 @@ public class ModeloTablaPlatillo implements TableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
+        return false;
     }
 
     @Override
@@ -136,6 +136,33 @@ public class ModeloTablaPlatillo implements TableModel {
                 resultado = false;
             }
 
+        }catch (SQLException sqle){
+            System.out.println(sqle.getMessage());
+        }
+        return resultado;
+    }
+    public Platillo getPlatilloAtIndex(int index){
+        return datos.get(index);
+    }
+    public boolean updatePlatillo(Platillo platillo){
+        boolean resultado = false;
+        try {
+            if (platilloDAO.update(platillo)){
+                System.out.println("Se ha actualizado un registro");
+                resultado = true;
+            }
+        }catch (SQLException sqle){
+            System.out.println(sqle.getMessage());
+        }
+        return resultado;
+    }
+    public boolean deletePlatillo(Platillo platillo){
+        boolean resultado = false;
+        try {
+            if (platilloDAO.delete(Integer.toString(platillo.getId()))){
+                resultado = true;
+                System.out.println("Se ha eliminado un registro");
+            }
         }catch (SQLException sqle){
             System.out.println(sqle.getMessage());
         }

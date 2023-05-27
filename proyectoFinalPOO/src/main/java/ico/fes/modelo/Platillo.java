@@ -1,5 +1,9 @@
 package ico.fes.modelo;
 
+import javax.swing.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Platillo {
     private int id;
     private String nombre;
@@ -78,5 +82,9 @@ public class Platillo {
                 ", dificultad='" + dificultad + '\'' +
                 ", url='" + url + '\'' +
                 '}';
+    }
+    public ImageIcon getImagen() throws MalformedURLException {
+        URL urlImagen = new URL(this.url);
+        return new ImageIcon(urlImagen);
     }
 }
