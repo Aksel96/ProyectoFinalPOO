@@ -5,6 +5,7 @@ import ico.fes.modelo.Platillo;
 import ico.fes.vista.VentanaGastronomia;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
@@ -12,6 +13,8 @@ import java.net.MalformedURLException;
 public class ControlladorPlatillos extends MouseAdapter {
     private VentanaGastronomia view;
     private ModeloTablaPlatillo modelo;
+
+
 
     public ControlladorPlatillos(VentanaGastronomia view) {
         this.view = view;
@@ -36,9 +39,10 @@ public class ControlladorPlatillos extends MouseAdapter {
             System.out.println("Click boton agregar");
             Platillo platillo = new Platillo();
             if (vacio()){
-                JOptionPane.showMessageDialog(view,"ERROR NINGUN CAMPO PUEDE ESTAR VACIO",
-                        "Aviso!",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view,
+                        "ERROR LOS CAMPOS NO PUEDEN ESTAR VACIOS.",
+                        "AVISO!",
+                        JOptionPane.WARNING_MESSAGE);
             }else {
                 if (verificarEsNumeroAdd()){
                     if (verificarEsString()){
@@ -49,22 +53,32 @@ public class ControlladorPlatillos extends MouseAdapter {
                         platillo.setDificultad(this.view.getTxtDificultadAgregar().getText());
                         platillo.setUrl(this.view.getTxtUrlAgregar().getText());
                         if (modelo.agregarPlatillo(platillo)){
-                            JOptionPane.showMessageDialog(view,"Se agrego correctamente","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            ImageIcon iconCheck = new ImageIcon("checkicon.png");
+                            JOptionPane.showMessageDialog(view,
+                                    "Se agrego correctamente.",
+                                    "AVISO!",
+                                    JOptionPane.INFORMATION_MESSAGE,
+                                    iconCheck);
                             modelo.cargarDatos();
                             this.view.getTblGastronomia().setModel(modelo);
                             this.view.getTblGastronomia().updateUI();
                         }else {
-                            JOptionPane.showMessageDialog(view,"No se Agrego","Error al insertar",JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(view,
+                                    "Error, No se pudo agregar el registro.",
+                                    "Error al insertar",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }else {
-                        JOptionPane.showMessageDialog(view,"Error datos invalidos",
-                                "Aviso!",
+                        JOptionPane.showMessageDialog(view,"Error, Los datos introducidos no son validos, intente nuevamente.\n" +
+                                        "Recuerda que los elemetos solo aceptan letras a exceptcion del campo \"Tiempo\"",
+                                "AVISO!",
                                 JOptionPane.ERROR_MESSAGE);
                     }
 
                 }else {
-                    JOptionPane.showMessageDialog(view,"Error el tiempo tiene que ser un numero entero",
-                            "Aviso!",
+                    JOptionPane.showMessageDialog(view,
+                            "Error, El cuadro de texto \" Tiempo de preparacion \" tiene que ser un numero entero.",
+                            "AVISO!",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -90,70 +104,153 @@ public class ControlladorPlatillos extends MouseAdapter {
             System.out.println("Click boton modificar");
             Platillo platilloMod = new Platillo();
             if (vacioMod()){
-                JOptionPane.showMessageDialog(view,"ERROR NINGUN CAMPO PUEDE ESTAR VACIO",
-                        "Aviso!",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view,
+                        "ERROR LOS CAMPOS NO PUEDEN ESTAR VACIOS.",
+                        "AVISO!",
+                        JOptionPane.WARNING_MESSAGE);
             }else {
-                if (verificarEsNumeroMod()){
-                    if (verificarEsStringMod()){
-                        platilloMod.setId(Integer.parseInt(this.view.getTxtIdModificar().getText()));
-                        platilloMod.setNombre(this.view.getTxtNombreModificar().getText());
-                        platilloMod.setRegionOrigen(this.view.getTxtRegionModificar().getText());
-                        platilloMod.setTiempoPreparacion(Integer.parseInt(this.view.getTxtTiempoModificar().getText()));
-                        platilloMod.setDificultad(this.view.getTxtDificultadModificar().getText());
-                        platilloMod.setUrl(this.view.getTxtUrlModificar().getText());
-                        int respuesta = JOptionPane.showConfirmDialog(view,"Queres modificar el registro?",
-                                "Confirmacion",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE);
-                        if (respuesta == JOptionPane.YES_NO_OPTION){
-                            if (modelo.updatePlatillo(platilloMod)){
-                                JOptionPane.showMessageDialog(view,"Se actualizo correctamente","Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                modelo.cargarDatos();
-                                this.view.getTblGastronomia().setModel(modelo);
-                                this.view.getTblGastronomia().updateUI();
+                if (this.view.getTxtIdModificar().getText().isEmpty()){
+                    JOptionPane.showMessageDialog(view,
+                            "Error,No se puede modificar sin antes seleccionar un registro \nSeleccione un registro de la tabla para modificar.",
+                            "AVISO!",
+                            JOptionPane.ERROR_MESSAGE);
+                }else {
+                    if (verificarEsNumeroMod()){
+                        if (verificarEsStringMod()){
+                            platilloMod.setId(Integer.parseInt(this.view.getTxtIdModificar().getText()));
+                            platilloMod.setNombre(this.view.getTxtNombreModificar().getText());
+                            platilloMod.setRegionOrigen(this.view.getTxtRegionModificar().getText());
+                            platilloMod.setTiempoPreparacion(Integer.parseInt(this.view.getTxtTiempoModificar().getText()));
+                            platilloMod.setDificultad(this.view.getTxtDificultadModificar().getText());
+                            platilloMod.setUrl(this.view.getTxtUrlModificar().getText());
+                            int respuesta = JOptionPane.showConfirmDialog(view,
+                                    "Estas seguro de que quieres modificar este registro?, Esta accion no se puede deshacer.",
+                                    "Confirmacion",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE);
+                            if (respuesta == JOptionPane.YES_NO_OPTION){
+                                if (modelo.updatePlatillo(platilloMod)){
+                                    ImageIcon icon = new ImageIcon("checkicon.png");
+                                    JOptionPane.showMessageDialog(view,
+                                            "Se actualizo correctamente",
+                                            "AVISO",
+                                            JOptionPane.INFORMATION_MESSAGE,
+                                            icon);
+                                    modelo.cargarDatos();
+                                    this.view.getTblGastronomia().setModel(modelo);
+                                    this.view.getTblGastronomia().updateUI();
+                                }else {
+                                    JOptionPane.showMessageDialog(view,
+                                            "Error, No se pudo actualizar el registro",
+                                            "Error al actualizar",
+                                            JOptionPane.ERROR_MESSAGE);
+                                }
                             }else {
-                                JOptionPane.showMessageDialog(view,"No se actualizo","Error al actualizar",JOptionPane.ERROR_MESSAGE);
+                                System.out.println("No se actualizo");
                             }
                         }else {
-                            System.out.println("No se actualizo");
+                            JOptionPane.showMessageDialog(view,
+                                    "Error, Los datos introducidos no son validos, intente nuevamente.",
+                                    "AVISO!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }else {
-                        JOptionPane.showMessageDialog(view,"Error datos invalidos",
-                                "Aviso!",
+                        JOptionPane.showMessageDialog(view,
+                                "Error, El cuadro de texto \" Tiempo de preparacion \" tiene que ser un numero entero.",
+                                "AVISO!",
                                 JOptionPane.ERROR_MESSAGE);
                     }
-                }else {
-                    JOptionPane.showMessageDialog(view,"Error el tiempo tiene que ser un numero entero",
-                            "Aviso!",
-                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
         if (e.getSource() == view.getBtnEliminar()){
             System.out.println("Click boton eliminar");
-            int index = this.view.getTblGastronomia().getSelectedRow();
-            Platillo platilloDelete = modelo.getPlatilloAtIndex(index);
-            int respuesta = JOptionPane.showConfirmDialog(view,"Estas seguro de borrar el registro?",
-                    "Confirmacion",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-            if (respuesta == JOptionPane.YES_NO_OPTION){
-                if(modelo.deletePlatillo(platilloDelete)){
-                    JOptionPane.showMessageDialog(view,"Se elimino correctamente","Aviso",JOptionPane.INFORMATION_MESSAGE);
-                    modelo.cargarDatos();
-                    this.view.getTblGastronomia().setModel(modelo);
-                    this.view.getTblGastronomia().updateUI();
-                } else{
-                    JOptionPane.showMessageDialog(view,"No se elimino","Error al eliminar",JOptionPane.ERROR_MESSAGE);
-                }
+            if (vacioMod()){
+                JOptionPane.showMessageDialog(view,
+                        "ERROR LOS CAMPOS NO PUEDEN ESTAR VACIOS.",
+                        "AVISO!",
+                        JOptionPane.WARNING_MESSAGE);
             }else {
-                System.out.println("No se elimino");
+                if (this.view.getTxtIdModificar().getText().isEmpty()){
+                    JOptionPane.showMessageDialog(view,
+                            "Error,No se puede eliminar sin antes seleccionar un registro \n Primero seleccione un registro por favor.",
+                            "AVISO!",
+                            JOptionPane.ERROR_MESSAGE);
+                }else {
+                    int index = this.view.getTblGastronomia().getSelectedRow();
+                    Platillo platilloDelete = modelo.getPlatilloAtIndex(index);
+                    int respuesta = JOptionPane.showConfirmDialog(view,
+                            "Estas seguro de borrar el registro?, Esta accion no se puede deshacer.",
+                            "Confirmacion",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    if (respuesta == JOptionPane.YES_NO_OPTION){
+                        if(modelo.deletePlatillo(platilloDelete)){
+                            ImageIcon icon = new ImageIcon("checkicon.png");
+                            JOptionPane.showMessageDialog(view,
+                                    "Se elimino correctamente",
+                                    "AVISO!",
+                                    JOptionPane.INFORMATION_MESSAGE,
+                                    icon);
+                            modelo.cargarDatos();
+                            this.view.getTblGastronomia().setModel(modelo);
+                            this.view.getTblGastronomia().updateUI();
+                        } else{
+                            JOptionPane.showMessageDialog(view,
+                                    "Error, No se pudo eliminar el registro.",
+                                    "Error al eliminar",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    }else {
+                        System.out.println("No se elimino");
+                    }
+                }
             }
         }
-
         this.view.limpiar();
     }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if (e.getSource() == this.view.getBtnEliminar()){
+            this.view.getBtnEliminar().setBackground(Color.RED);
+            this.view.getBtnEliminar().setForeground(Color.WHITE);
+        }
+        if (e.getSource() == this.view.getBtnAgregar()){
+            this.view.getBtnAgregar().setBackground(Color.BLACK);
+            this.view.getBtnAgregar().setForeground(Color.WHITE);
+        }
+        if (e.getSource() == this.view.getBtnModificar()){
+            this.view.getBtnModificar().setForeground(Color.WHITE);
+            this.view.getBtnModificar().setBackground(Color.BLACK);
+        }
+        if (e.getSource() == this.view.getBtnCargar()){
+            this.view.getBtnCargar().setForeground(Color.WHITE);
+            this.view.getBtnCargar().setBackground(Color.BLACK);
+
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if (e.getSource() == this.view.getBtnEliminar()){
+            this.view.getBtnEliminar().setBackground(new Color(255, 156, 160));
+            this.view.getBtnEliminar().setForeground(Color.BLACK);
+        }
+        if (e.getSource() == this.view.getBtnAgregar()){
+            this.view.getBtnAgregar().setBackground(Color.WHITE);
+            this.view.getBtnAgregar().setForeground(Color.BLACK);
+        }
+        if (e.getSource() == this.view.getBtnModificar()){
+            this.view.getBtnModificar().setForeground(Color.BLACK);
+            this.view.getBtnModificar().setBackground(Color.WHITE);
+        }
+        if (e.getSource() == this.view.getBtnCargar()){
+            this.view.getBtnCargar().setForeground(Color.BLACK);
+            this.view.getBtnCargar().setBackground(Color.WHITE);
+        }
+    }
+
     private boolean vacio(){
         if (this.view.getTxtNombreAgregar().getText().isEmpty() || this.view.getTxtRegionAgregar().getText().isEmpty() ||
         this.view.getTxtDificultadAgregar().getText().isEmpty() || this.view.getTxtUrlAgregar().getText().isEmpty() ||

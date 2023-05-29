@@ -43,12 +43,15 @@ public class VentanaGastronomia extends JFrame {
 
     public VentanaGastronomia(String title) throws HeadlessException {
         super(title);
-        this.setSize(1000,900);
+        this.setSize(1200,900);
         layout = new GridLayout(2,2);
         this.getContentPane().setLayout(layout);
+        javax.swing.border.Border borde = BorderFactory.createLineBorder(Color.BLACK,3);
+        javax.swing.border.Border bordeSmall = BorderFactory.createLineBorder(Color.BLACK,1);
+        javax.swing.border.Border bordeRed = BorderFactory.createLineBorder(Color.RED,3);
         //Panel1
         panel1 = new JPanel(new GridLayout(0,2));
-        panel1.setBackground(new Color(129, 204, 229));
+        panel1.setBackground(new Color(167, 240, 255));
         lblNombre = new JLabel("        Nombre del Platillo:");
         lblRegion = new JLabel("        Region de origen:");
         lblTiempo =  new JLabel("        Tiempo de Preparacion:");
@@ -60,6 +63,9 @@ public class VentanaGastronomia extends JFrame {
         txtDificultadAgregar = new JTextField(10);
         txtUrlAgregar = new JTextField(10);
         btnAgregar = new JButton("Agregar");
+        btnAgregar.setBorder(borde);
+        btnAgregar.setBackground(Color.WHITE);
+        btnAgregar.setForeground(Color.BLACK);
         panel1.add(lblNombre);
         panel1.add(txtNombreAgregar);
         panel1.add(lblRegion);
@@ -71,27 +77,32 @@ public class VentanaGastronomia extends JFrame {
         panel1.add(lblUrl);
         panel1.add(txtUrlAgregar);
         panel1.add(btnAgregar);
+        panel1.setBorder(bordeSmall);
 
 
         //Panel2
         panel2 = new JPanel(new FlowLayout());
-        panel2.setBackground(new Color(122, 215, 143));
+        panel2.setBackground(new Color(169, 238, 208));
         btnCargar = new JButton("Cargar");
+        btnCargar.setForeground(Color.BLACK);
+        btnCargar.setBackground(Color.WHITE);
         panel2.add(btnCargar);
         tblGastronomia = new JTable();
         tblGastronomia.setEnabled(true);
         scrollPane = new JScrollPane(tblGastronomia);
         panel2.add(scrollPane);
+        panel2.setBorder(bordeSmall);
 
         //Panel3
         panel3 = new JPanel(new FlowLayout());
-        panel3.setBackground(new Color(184, 137, 255));
+        panel3.setBackground(new Color(210, 182, 255));
         imagenPlatillos = new JLabel("");
         panel3.add(imagenPlatillos);
+        panel3.setBorder(bordeSmall);
 
         //Panel4
         panel4 = new JPanel(new GridLayout(0,2));
-        panel4.setBackground(new Color(250, 221, 170));
+        panel4.setBackground(new Color(255, 214, 177));
         lblId = new JLabel("       Id:");
         lblNombreMod = new JLabel("        Nombre del Platillo:");
         lblRegionMod = new JLabel("        Region de origen:");
@@ -106,7 +117,13 @@ public class VentanaGastronomia extends JFrame {
         txtDificultadModificar = new JTextField();
         txtUrlModificar = new JTextField();
         btnModificar = new JButton("Modificar");
+        btnModificar.setBackground(Color.WHITE);
+        btnModificar.setForeground(Color.BLACK);
+        btnModificar.setBorder(borde);
         btnEliminar = new JButton("Eliminar");
+        btnEliminar.setForeground(Color.BLACK);
+        btnEliminar.setBackground(new Color(255, 156, 160));
+        btnEliminar.setBorder(bordeRed);
         panel4.add(lblId);
         panel4.add(txtIdModificar);
         panel4.add(lblNombreMod);
@@ -121,6 +138,7 @@ public class VentanaGastronomia extends JFrame {
         panel4.add(txtUrlModificar);
         panel4.add(btnEliminar);
         panel4.add(btnModificar);
+        panel4.setBorder(bordeSmall);
 
         // Agregando paneles al content pane
 
